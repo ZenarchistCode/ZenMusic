@@ -160,8 +160,11 @@ class PluginZenMusicRadio extends PluginBase
 
             if (car.IsPlayingZenRadio() && car.GetZenMusicCassette())
             {
-                car.GetZenMusicCassette().UnlockFromParent();
-                car.GetZenMusicCassette().DeleteSafe();
+                if (car.GetZenMusicCassette().IsZenRadioCassette())
+                {
+                    car.GetZenMusicCassette().UnlockFromParent();
+                    car.GetZenMusicCassette().DeleteSafe();
+                }
             }
         }
 
@@ -176,8 +179,11 @@ class PluginZenMusicRadio extends PluginBase
 
             if (device.IsPlayingZenRadio() && device.GetZenMusicCassette())
             {
-                device.GetZenMusicCassette().UnlockFromParent();
-                device.GetZenMusicCassette().DeleteSafe();
+                if (device.GetZenMusicCassette().IsZenRadioCassette())
+                {
+                    device.GetZenMusicCassette().UnlockFromParent();
+                    device.GetZenMusicCassette().DeleteSafe();
+                }
             }
         }
     }

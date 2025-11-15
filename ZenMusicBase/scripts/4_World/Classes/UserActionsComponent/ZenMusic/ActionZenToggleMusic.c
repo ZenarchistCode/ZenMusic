@@ -39,6 +39,11 @@ class ActionZenToggleMusic : ActionInteractBase
 				CarScript car;
 				if (Class.CastTo(car, trans))
 				{
+					if (!car.GetInventory().HasAttachmentSlot(InventorySlots.GetSlotIdFromString("ZenCassette")))
+					{
+						return false;
+					}
+
 					if (car.IsVitalCarBattery())
 					{
 						CarBattery carBattery = CarBattery.Cast(car.FindAttachmentBySlotName("CarBattery"));

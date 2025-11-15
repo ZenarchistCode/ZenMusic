@@ -10,6 +10,7 @@ class Zen_MusicDeviceBase extends ItemBase
     protected int				m_ZenMusicNoiseCount = 0;
 
 	// Server & client
+	protected ref Timer 		m_ZenMusicTimer;
 	protected bool				m_ZenMusicPausedServer;
 	protected float				m_ZenMusicVolumeClient = 1.0;
 	protected float				m_ZenMusicVolume = 1.0;
@@ -92,9 +93,9 @@ class Zen_MusicDeviceBase extends ItemBase
 		return ConfigGetFloat("maxVolume");
 	}
 
-	ItemBase GetZenMusicCassette()
+	Zen_Cassette_Base GetZenMusicCassette()
     {
-        return ItemBase.Cast(FindAttachmentBySlotName("ZenCassette"));
+        return Zen_Cassette_Base.Cast(FindAttachmentBySlotName("ZenCassette"));
     }
 
     ItemBase GetZenMusicBattery()
@@ -238,8 +239,6 @@ class Zen_MusicDeviceBase extends ItemBase
 		SetSynchDirty();
 
 		CallZenZombieDancers();
-
-		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(UpdateZenMusicSongDuration, ZEN_SONG_UPDATE_TIMER_SECS * 1000.0, false);
 	}
 
 	bool PlayZenMusicSongServer(int skipSecs = 0)
@@ -263,7 +262,12 @@ class Zen_MusicDeviceBase extends ItemBase
 		m_ZenMusicPlaySecs = skipSecs;
 		m_ZenMusicDuration = Zen_Cassette_Base.GetZenMusicSongDuration(GetZenMusicCassette().GetType()) + 10; // Add 10 secs as a safe buffer for server/client sync
 
-		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(UpdateZenMusicSongDuration, 1000, false);
+		if (!m_ZenMusicTimer || !m_ZenMusicTimer.IsRunning())
+		{
+			m_ZenMusicTimer = new Timer();
+			m_ZenMusicTimer.Run(ZEN_SONG_UPDATE_TIMER_SECS, this, "UpdateZenMusicSongDuration", null, true);
+		}
+
 		SetSynchDirty();
 
 		return true;
@@ -271,6 +275,11 @@ class Zen_MusicDeviceBase extends ItemBase
 
 	void StopZenMusicSongServer(bool turnOffRadio = false)
 	{
+		if (m_ZenMusicTimer)
+		{
+			m_ZenMusicTimer.Stop();
+		}
+
 		m_ZenMusicPlaySecs = -1;
 
 		if (GetCompEM() && !m_ZenIsPlayingRadio)
@@ -280,7 +289,7 @@ class Zen_MusicDeviceBase extends ItemBase
 
 		if (m_ZenIsPlayingRadio)
 		{
-			if (GetZenMusicCassette())
+			if (GetZenMusicCassette() && GetZenMusicCassette().IsZenRadioCassette())
 			{
 				GetZenMusicCassette().UnlockFromParent();
 				GetZenMusicCassette().DeleteSafe();

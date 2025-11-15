@@ -29,7 +29,10 @@ modded class MissionBase
                 if (GetGame().ConfigGetInt("CfgVehicles " + cfg_name + " allowRandomSpawn") != 0)
                 {
                     Zen_Cassette_RandomTape.RANDOM_TAPES.Insert(cfg_name);
-                    Print("[ZenMusic] Loaded random tape spawn: " + cfg_name);
+                }
+                else 
+                {
+                    Print("[ZenMusic] Skipping random tape spawn (allowRandomSpawn=0): " + cfg_name);
                 }
             }
 		}

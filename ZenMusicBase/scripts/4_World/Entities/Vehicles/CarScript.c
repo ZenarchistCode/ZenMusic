@@ -1,9 +1,10 @@
 modded class CarScript
 {
 	//! MUSIC
-	const static float ZEN_ZEN_SONG_UPDATE_TIMER_SECS = 1.0;
+	const static float ZEN_SONG_UPDATE_TIMER_SECS = 1.0;
 
 	// Server & client
+	protected ref Timer m_ZenMusicTimer;
 	protected float m_ZenMusicVolumeClient = 0.5;
 	protected float m_ZenMusicVolume = 0.5;
 	protected bool m_ZenIsPlayingRadio = false;
@@ -46,9 +47,9 @@ modded class CarScript
 	}
 
 	//! MUSIC
-	ItemBase GetZenMusicCassette()
+	Zen_Cassette_Base GetZenMusicCassette()
     {
-        return ItemBase.Cast(FindAttachmentBySlotName("ZenCassette"));
+        return Zen_Cassette_Base.Cast(FindAttachmentBySlotName("ZenCassette"));
     }
 
 	int GetZenMusicSongDuration()
@@ -92,19 +93,28 @@ modded class CarScript
 
 		m_ZenMusicPlaySecs = skipSecs;
 
-		GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(UpdateZenMusicSongDuration, 1000, false);
+		if (!m_ZenMusicTimer || !m_ZenMusicTimer.IsRunning())
+		{
+			m_ZenMusicTimer = new Timer();
+			m_ZenMusicTimer.Run(ZEN_SONG_UPDATE_TIMER_SECS, this, "UpdateZenMusicSongDuration", null, true);
+		}
+
 		SetSynchDirty();
 	}
 
 	void StopZenMusicSongServer(bool turnOffRadio = false)
 	{
-		GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).Remove(UpdateZenMusicSongDuration);
+		if (m_ZenMusicTimer)
+		{
+			m_ZenMusicTimer.Stop();
+		}
+
 		m_ZenMusicPlaySecs = -1;
 		SetSynchDirty();
 
 		if (m_ZenIsPlayingRadio)
 		{
-			if (GetZenMusicCassette())
+			if (GetZenMusicCassette() && GetZenMusicCassette().IsZenRadioCassette())
 			{
 				GetZenMusicCassette().UnlockFromParent();
 				GetZenMusicCassette().DeleteSafe();
@@ -171,10 +181,8 @@ modded class CarScript
 		}
 
 		// All is well - continue to rock out with your small stones out.
-		m_ZenMusicPlaySecs += ZEN_ZEN_SONG_UPDATE_TIMER_SECS;
+		m_ZenMusicPlaySecs += ZEN_SONG_UPDATE_TIMER_SECS;
 		SetSynchDirty();
-
-		GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(UpdateZenMusicSongDuration, ZEN_ZEN_SONG_UPDATE_TIMER_SECS * 1000, false);
 	}
 
 	void TurnZenMusicVolumeUp()
