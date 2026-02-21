@@ -4,7 +4,7 @@ modded class MissionBase
     {
         GetRPCManager().AddRPC("ZenMod_RPC", "RPC_ReceiveZenMusicCfgClient", this, SingeplayerExecutionType.Client);
 
-        if (!GetGame().IsDedicatedServer())
+        if (!g_Game.IsDedicatedServer())
             return;
 
         int i;
@@ -21,12 +21,12 @@ modded class MissionBase
 
 
 		// Load how many cassette tapes exist for RandomCassette spawner
-		for (i = 0; i < GetGame().ConfigGetChildrenCount("CfgVehicles"); i++)
+		for (i = 0; i < g_Game.ConfigGetChildrenCount("CfgVehicles"); i++)
 		{
-			GetGame().ConfigGetChildName("CfgVehicles", i, cfg_name);
+			g_Game.ConfigGetChildName("CfgVehicles", i, cfg_name);
 			if (cfg_name.Contains("Zen_Cassette_") && !cfg_name.Contains("Base"))
             {
-                if (GetGame().ConfigGetInt("CfgVehicles " + cfg_name + " allowRandomSpawn") != 0)
+                if (g_Game.ConfigGetInt("CfgVehicles " + cfg_name + " allowRandomSpawn") != 0)
                 {
                     Zen_Cassette_RandomTape.RANDOM_TAPES.Insert(cfg_name);
                 }

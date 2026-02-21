@@ -31,7 +31,7 @@ class ActionZenStaticBoomboxTurnOn : ActionInteractBase
 
 		// Scan for any invisible music (eg. guitar player) and stop their music
 		array<Object> nearbyObjects = new array<Object>;
-		GetGame().GetObjectsAtPosition3D(ntarget.GetPosition(), GetZenMusicConfig().StaticBoomboxTurnsOffInvisibleRange, nearbyObjects, NULL);
+		g_Game.GetObjectsAtPosition3D(ntarget.GetPosition(), GetZenMusicConfig().StaticBoomboxTurnsOffInvisibleRange, nearbyObjects, NULL);
 
 		foreach (Object obj : nearbyObjects)
 		{

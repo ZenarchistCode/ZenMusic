@@ -143,7 +143,7 @@ modded class AttachmentCategoriesContainer: CollapsibleContainer
 
 			string config = config_path_attachment_categories + " " + attachment_category + " name";
 			string name;
-			GetGame().ConfigGetText(config, name);
+			g_Game.ConfigGetText(config, name);
 			icon.SetSlotDisplayName(name);
 
 			AttachmentCategoriesRow ar = new AttachmentCategoriesRow(this, -1);

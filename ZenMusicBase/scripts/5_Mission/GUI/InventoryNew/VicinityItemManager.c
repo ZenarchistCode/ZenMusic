@@ -55,7 +55,7 @@ modded class VicinityItemManager
 
 	bool ZenMusic_PlayerInCar()
 	{
-		PlayerBase player = PlayerBase.Cast(GetGame().GetPlayer());
+		PlayerBase player = PlayerBase.Cast(g_Game.GetPlayer());
 		if (player && player.IsInVehicle())
 			return true;
 
