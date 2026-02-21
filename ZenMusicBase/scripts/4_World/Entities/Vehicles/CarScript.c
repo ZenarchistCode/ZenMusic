@@ -32,10 +32,10 @@ modded class CarScript
 
 	void ~CarScript()
 	{
-		if (!GetGame())
+		if (!g_Game)
 			return;
 
-		if (GetGame().IsDedicatedServer())
+		if (g_Game.IsDedicatedServer())
 		{
 			StopZenMusicSongServer(true);
 		} else
@@ -294,7 +294,7 @@ modded class CarScript
 
 		if (slot_name == "ZenCassette" || slot_name == "CarBattery" || slot_name == "TruckBattery")
 		{
-			if (GetGame().IsDedicatedServer())
+			if (g_Game.IsDedicatedServer())
 			{
 			
 				StopZenMusicSongServer(slot_name != "ZenCassette");
@@ -356,10 +356,10 @@ modded class CarScript
 
 	static bool ZenMusic_PlayerInCar()
 	{
-		if (!GetGame() || !GetGame().IsClient())
+		if (!g_Game || !g_Game.IsClient())
 			return false;
 
-		PlayerBase clientPlayer = PlayerBase.Cast(GetGame().GetPlayer());
+		PlayerBase clientPlayer = PlayerBase.Cast(g_Game.GetPlayer());
 		if (clientPlayer)
 		{
 			return clientPlayer.IsInVehicle();

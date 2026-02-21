@@ -6,8 +6,8 @@ class Zen_Cassette_RandomTape extends ItemBase
 	{
 		super.EEInit();
 
-		if (GetGame().IsDedicatedServer())
-			GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(ShapeshifterMorph, 1000, false);
+		if (g_Game.IsDedicatedServer())
+			g_Game.GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(ShapeshifterMorph, 1000, false);
 	}
 
 	private void ShapeshifterMorph()

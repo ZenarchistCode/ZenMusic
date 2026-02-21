@@ -23,7 +23,7 @@ class Zen_Cassette_Base extends ItemBase
 
 		if (m_IsZenRadioCassette)
 		{
-			GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(LockToParent, 100, false);
+			g_Game.GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(LockToParent, 100, false);
 		}
 	}
 
@@ -40,7 +40,7 @@ class Zen_Cassette_Base extends ItemBase
 		}
 
 		string cfgPath = "CfgVehicles " + GetType();
-		GetGame().ConfigGetText(cfgPath + " descriptionShort", output);
+		g_Game.ConfigGetText(cfgPath + " descriptionShort", output);
 
 		output = "87.8 Survivor FM Radio: " + output;
 		return true;
@@ -48,12 +48,12 @@ class Zen_Cassette_Base extends ItemBase
 
 	static int GetZenMusicSongDuration(string type)
 	{
-		if (!GetGame())
+		if (!g_Game)
 			return -1;
 
 		string cfgPath = "CfgVehicles " + type;
 
-		if (!GetGame().ConfigIsExisting(cfgPath))
+		if (!g_Game.ConfigIsExisting(cfgPath))
 			return -1;
 
 		if (GetZenMusicConfig().DebugSongDurationOverride > 0)
@@ -61,7 +61,7 @@ class Zen_Cassette_Base extends ItemBase
 			return GetZenMusicConfig().DebugSongDurationOverride;
 		}
 
-		return GetGame().ConfigGetInt(cfgPath + " playSeconds");
+		return g_Game.ConfigGetInt(cfgPath + " playSeconds");
 	}
 
 	static string GetZenMusicSoundSet(string type)
@@ -74,28 +74,28 @@ class Zen_Cassette_Base extends ItemBase
 
 	static bool IsZenMusicCopyrighted(string type)
 	{
-		if (!GetGame())
+		if (!g_Game)
 			return false;
 
 		string cfgPath = "CfgVehicles " + type;
 
-		if (!GetGame().ConfigIsExisting(cfgPath))
+		if (!g_Game.ConfigIsExisting(cfgPath))
 			return false;
 
-		return GetGame().ConfigGetInt(cfgPath + " copyrighted") == 1;
+		return g_Game.ConfigGetInt(cfgPath + " copyrighted") == 1;
 	}
 
 	static bool IsZenMusicTape(string type)
 	{
-		if (!GetGame())
+		if (!g_Game)
 			return false;
 
 		string cfgPath = "CfgVehicles " + type;
 
-		if (!GetGame().ConfigIsExisting(cfgPath))
+		if (!g_Game.ConfigIsExisting(cfgPath))
 			return false;
 
-		return GetGame().ConfigGetInt(cfgPath + " isMusic") == 1;
+		return g_Game.ConfigGetInt(cfgPath + " isMusic") == 1;
 	}
 
 	override void OnStoreSave(ParamsWriteContext ctx)

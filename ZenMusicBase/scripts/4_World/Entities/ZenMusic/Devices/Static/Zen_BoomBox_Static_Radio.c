@@ -4,7 +4,7 @@ class Zen_BoomBox_Static_Radio extends Zen_BoomBox
 	{
 		super.EEInit();
 
-		if (!GetGame().IsDedicatedServer())
+		if (!g_Game.IsDedicatedServer())
 			return;
 
 		SetAllowDamage(false);
@@ -23,7 +23,7 @@ class Zen_BoomBox_Static_Radio extends Zen_BoomBox
 
 		if (GetZenMusicConfig().RadioBoomboxAutoPlay)
 		{
-			GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(PlayZenMusicSongServer, 1500.0, false, false);
+			g_Game.GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(PlayZenMusicSongServer, 1500.0, false, false);
 		}
 	}
 
@@ -41,7 +41,7 @@ class Zen_BoomBox_Static_Radio extends Zen_BoomBox
 	{
 		super.OnWorkStart();
 
-		if (!GetGame().IsDedicatedServer())
+		if (!g_Game.IsDedicatedServer())
 		{
 			return;
 		}
@@ -53,7 +53,7 @@ class Zen_BoomBox_Static_Radio extends Zen_BoomBox
 	{
 		super.OnWorkStop();
 
-		if (!GetGame().IsDedicatedServer())
+		if (!g_Game.IsDedicatedServer())
 		{
 			return;
 		}
@@ -64,7 +64,7 @@ class Zen_BoomBox_Static_Radio extends Zen_BoomBox
 	void ToggleInvisibleZenRadio(bool turnOn)
 	{
 		array<Object> nearbyObjects = new array<Object>;
-		GetGame().GetObjectsAtPosition3D(GetPosition(), GetZenMusicConfig().StaticBoomboxTurnsOffInvisibleRange, nearbyObjects, NULL);
+		g_Game.GetObjectsAtPosition3D(GetPosition(), GetZenMusicConfig().StaticBoomboxTurnsOffInvisibleRange, nearbyObjects, NULL);
 
 		foreach (Object obj : nearbyObjects)
 		{

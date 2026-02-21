@@ -35,7 +35,7 @@ class Zen_MusicDeviceBase extends ItemBase
 		if (CanAlertZenZombies())
 		{
 			if (!m_ZenMusicNoiseSystem)
-				m_ZenMusicNoiseSystem = GetGame().GetNoiseSystem();
+				m_ZenMusicNoiseSystem = g_Game.GetNoiseSystem();
 
 			// Prepare zombie noise caller
 			if (m_ZenMusicNoiseSystem && !m_ZenMusicNoisePar)
@@ -60,10 +60,10 @@ class Zen_MusicDeviceBase extends ItemBase
 
 	void ~Zen_MusicDeviceBase()
 	{
-		if (!GetGame())
+		if (!g_Game)
 			return;
 
-		if (GetGame().IsDedicatedServer())
+		if (g_Game.IsDedicatedServer())
 			StopZenMusicSongServer(true);
 
 		if (m_ZenSong)
@@ -77,7 +77,7 @@ class Zen_MusicDeviceBase extends ItemBase
 
 	float GetZenMusicVolume()
 	{
-		if (GetGame().IsClient())
+		if (g_Game.IsClient())
 			return m_ZenMusicVolumeClient;
 
 		return m_ZenMusicVolume;
@@ -368,7 +368,7 @@ class Zen_MusicDeviceBase extends ItemBase
     {
         super.OnWorkStart();
 
-		if (GetGame().IsDedicatedServer())
+		if (g_Game.IsDedicatedServer())
 		{
 			if (GetCompEM() && !PlayZenMusicSongServer())
 				GetCompEM().SwitchOff();

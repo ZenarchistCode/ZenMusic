@@ -759,11 +759,6 @@ class CfgSoundShaders
 			},
 			
 			{
-				"ZenMusicBase\data\sounds\radio\radio8",
-				1
-			},
-			
-			{
 				"ZenMusicBase\data\sounds\radio\radio9",
 				1
 			},

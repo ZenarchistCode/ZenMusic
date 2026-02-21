@@ -30,7 +30,7 @@ class ZenMusicConfig
 		RadioIntermissionSongs = new array<string>;
 
 		// Don't load JSON on server
-		if (!GetGame().IsDedicatedServer())
+		if (!g_Game.IsDedicatedServer())
 			return;
 
 		if (FileExist(zenModFolder + zenConfigName))

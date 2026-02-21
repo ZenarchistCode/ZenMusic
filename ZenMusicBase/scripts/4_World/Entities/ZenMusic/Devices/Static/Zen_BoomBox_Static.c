@@ -26,17 +26,17 @@ class Zen_BoomBox_Static extends Zen_MusicDeviceBase
 
 		Print("[ZenMusic] Spawned " + GetType() + ". IsPaused=" + m_ZenMusicPausedServer);
 
-		GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(PrepareForNewZenMusic, 1500.0, false, false);
+		g_Game.GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(PrepareForNewZenMusic, 1500.0, false, false);
 	}
 
 	void ~Zen_BoomBox_Static()
 	{
-		if (!GetGame())
+		if (!g_Game)
 			return;
 
-		if (GetGame().IsDedicatedServer())
+		if (g_Game.IsDedicatedServer())
 		{
-			GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).Remove(UpdateZenMusicSongDuration);
+			g_Game.GetCallQueue(CALL_CATEGORY_SYSTEM).Remove(UpdateZenMusicSongDuration);
 		}
 	}
 
@@ -44,7 +44,7 @@ class Zen_BoomBox_Static extends Zen_MusicDeviceBase
 	{
 		if (forceUnpause)
 		{
-			GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).Remove(UpdateZenMusicSongDuration);
+			g_Game.GetCallQueue(CALL_CATEGORY_SYSTEM).Remove(UpdateZenMusicSongDuration);
 			m_ZenMusicPausedServer = false;
 		}
 
@@ -64,7 +64,7 @@ class Zen_BoomBox_Static extends Zen_MusicDeviceBase
 				battery.LockToParent();
 		}
 
-		GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(SpawnRandomZenMusicCassette, 1000.0, false);
+		g_Game.GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(SpawnRandomZenMusicCassette, 1000.0, false);
 	}
 
 	override void UpdateZenMusicSongDuration()
@@ -76,7 +76,7 @@ class Zen_BoomBox_Static extends Zen_MusicDeviceBase
 		if (m_ZenMusicPlaySecs < 0 || m_ZenMusicPlaySecs > GetZenMusicSongDuration() + 10)
 		{
 			StopZenMusicSongServer();
-			GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(PrepareForNewZenMusic, 1500, false, false);
+			g_Game.GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(PrepareForNewZenMusic, 1500, false, false);
 			return;
 		}
 
@@ -86,7 +86,7 @@ class Zen_BoomBox_Static extends Zen_MusicDeviceBase
 
 		CallZenZombieDancers();
 
-		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(UpdateZenMusicSongDuration, ZEN_SONG_UPDATE_TIMER_SECS * 1000, false);
+		g_Game.GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(UpdateZenMusicSongDuration, ZEN_SONG_UPDATE_TIMER_SECS * 1000, false);
 	}
 
 	void SpawnRandomZenMusicCassette()
@@ -153,14 +153,14 @@ class Zen_BoomBox_Static extends Zen_MusicDeviceBase
 		if (!HasValidZenMusicCassette())
 		{
 			Error("[ZenMusic] Cassette malfunctioned for tape: " + GetZenMusicCassette().GetType() + " (HasValidZenMusicCassette = false)");
-			GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(PrepareForNewZenMusic, 1500, false);
+			g_Game.GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(PrepareForNewZenMusic, 1500, false);
 			m_ZenCassetteSpawnFails++;
 			return false;
 		}
 
 		m_ZenMusicPlaySecs = skipSecs;
 		m_ZenMusicPausedServer = false;
-		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(UpdateZenMusicSongDuration, 1000, false);
+		g_Game.GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(UpdateZenMusicSongDuration, 1000, false);
 		SetSynchDirty();
 
 		return true;
@@ -168,7 +168,7 @@ class Zen_BoomBox_Static extends Zen_MusicDeviceBase
 
 	override void StopZenMusicSongServer(bool turnOffRadio = false)
 	{
-		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).Remove(UpdateZenMusicSongDuration);
+		g_Game.GetCallQueue(CALL_CATEGORY_SYSTEM).Remove(UpdateZenMusicSongDuration);
 		m_ZenMusicPlaySecs = -1;
 		SetSynchDirty();
 	}
