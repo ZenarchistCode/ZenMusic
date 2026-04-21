@@ -6,7 +6,8 @@
 		requiredAddons[] =
 		{
 			"DZ_Data",
-			"DZ_Scripts"
+			"DZ_Scripts",
+			"ZenModCore"
 		};
 	};
 };
@@ -15,11 +16,7 @@ class CfgMods
 {
 	class ZenMusicBase
 	{
-		dir = "ZenMusicBase";
-		name = "Zen's Music";
 		author = "Zenarchist";
-		credits = "";
-		version = "1.0";
 		type = "mod";
 		inputs = "ZenMusicBase/data/inputs.xml";
 		dependencies[] = 
@@ -41,24 +38,21 @@ class CfgMods
 			{
 				files[] = 
 				{ 
-					"ZenMusicBase/scripts/3_Game",
-					"ZenMusicBase/scripts/Common"
+					"ZenMusicBase/scripts/3_Game"
 				};
 			};
 			class worldScriptModule
 			{
 				files[] = 
 				{ 
-					"ZenMusicBase/scripts/4_World",
-					"ZenMusicBase/scripts/Common"
+					"ZenMusicBase/scripts/4_World"
 				};
 			};
 			class missionScriptModule
 			{
 				files[] = 
 				{ 
-					"ZenMusicBase/scripts/5_mission",
-					"ZenMusicBase/scripts/common"
+					"ZenMusicBase/scripts/5_mission"
 				};
 			};
 		};
@@ -178,13 +172,17 @@ class CfgVehicles
             "BatteryD",
             "ZenCassette"
         };
+		inventorySlot[] =
+		{
+			"Backpack_1"
+		};
         repairableWithKits[] = { 7 };
         repairCosts[] = { 25 };
         class EnergyManager
         {
             hasIcon = 1;
             autoSwitchOff = 1;
-            energyUsagePerSecond = 0.01;
+            energyUsagePerSecond = 0.0001;
             plugType = 1;
             attachmentAction = 1;
             wetnessExposure = 0.1;
@@ -272,7 +270,7 @@ class CfgVehicles
         {
             hasIcon = 1;
             autoSwitchOff = 1;
-            energyUsagePerSecond = 0.01;
+            energyUsagePerSecond = 0.002;
             plugType = 1;
             attachmentAction = 1;
             wetnessExposure = 0.1;
@@ -361,7 +359,12 @@ class CfgVehicles
 		allowRandomSpawn = 1;
         inventorySlot[] =
         {
-            "ZenCassette"
+            "ZenCassette",
+			"ZenJournal_Paper1",
+			"ZenJournal_Paper2",
+			"ZenJournal_Paper3",
+			"ZenJournal_Paper4",
+			"ZenJournal_Paper5"
         };
 		class CfgCassette
 		{
