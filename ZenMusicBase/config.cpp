@@ -25,6 +25,7 @@ class CfgMods
 			"World", 
 			"Mission" 
 		};
+		defines[] = {"ZENMUSIC"};
 		class defs
 		{
 			class imageSets

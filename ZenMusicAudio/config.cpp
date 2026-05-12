@@ -380,7 +380,7 @@ class CfgSoundShaders
 	class Zen_Cassette_Alan7_SoundShader : Zen_Cassette_SoundShader_Base { samples[] = { { "ZenMusicAudio\data\sounds\alan7", 1 } }; };
 	class Zen_Cassette_Alan8_SoundShader : Zen_Cassette_SoundShader_Base { samples[] = { { "ZenMusicAudio\data\sounds\alan8", 1 } }; };
 	class Zen_Cassette_Alan9_SoundShader : Zen_Cassette_SoundShader_Base { samples[] = { { "ZenMusicAudio\data\sounds\alan9", 1 } }; };
-}
+};
 
 class CfgSoundSets
 {
@@ -431,4 +431,4 @@ class CfgSoundSets
 	class Zen_Cassette_Alan7_SoundSet { soundShaders[] = { "Zen_Cassette_Alan7_SoundShader" }; volumeFactor = 1.5; };
 	class Zen_Cassette_Alan8_SoundSet { soundShaders[] = { "Zen_Cassette_Alan8_SoundShader" }; volumeFactor = 1.5; };
 	class Zen_Cassette_Alan9_SoundSet { soundShaders[] = { "Zen_Cassette_Alan9_SoundShader" }; volumeFactor = 1.5; };
-}
+};
